@@ -1,6 +1,5 @@
 mod dolphin;
-
-use clash::{room::Room, spatula::Spatula};
+use crate::{room::Room, spatula::Spatula};
 use thiserror::Error;
 
 #[derive(Copy, Clone, Debug, Error)]

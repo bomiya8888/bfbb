@@ -1,10 +1,10 @@
-use clash::{room::Room, spatula::Spatula};
+use crate::{room::Room, spatula::Spatula};
 use log::{debug, error, trace};
 use process_memory::{Memory, ProcessHandle, TryIntoProcessHandle};
 use sysinfo::{ProcessExt, System, SystemExt};
 use thiserror::Error;
 
-use crate::game::{GameInterface, InterfaceError, InterfaceResult};
+use crate::game_interface::{GameInterface, InterfaceError, InterfaceResult};
 
 use super::DataMember;
 

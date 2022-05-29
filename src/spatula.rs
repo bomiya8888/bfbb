@@ -1,9 +1,9 @@
-use serde::{Deserialize, Serialize};
 use strum_macros::{EnumCount, EnumIter};
 
 use crate::room::Room;
 
-#[derive(EnumIter, EnumCount, Hash, Debug, Deserialize, Serialize, Clone, Copy, PartialEq, Eq)]
+#[derive(EnumIter, EnumCount, Hash, Debug, Clone, Copy, PartialEq, Eq)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub enum Spatula {
     // Bikini Bottom
     OnTopOfThePineapple,

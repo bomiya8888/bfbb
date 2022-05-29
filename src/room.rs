@@ -1,8 +1,7 @@
 use std::fmt::Formatter;
 
-use serde::{Deserialize, Serialize};
-
-#[derive(Debug, Deserialize, Serialize, PartialEq, Eq, Copy, Clone)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub enum Room {
     MainMenu,
     IntroCutscene,
@@ -70,13 +69,6 @@ pub enum Room {
     ChumBucketBrain,
 
     SpongeballArena,
-}
-
-impl Room {
-    #[allow(dead_code)]
-    const fn get_name(&self) -> &'static str {
-        todo!()
-    }
 }
 
 impl std::fmt::Display for Room {
