@@ -1,4 +1,5 @@
-mod dolphin;
+pub mod dolphin;
+
 use crate::{room::Room, spatula::Spatula};
 use thiserror::Error;
 
