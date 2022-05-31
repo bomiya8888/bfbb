@@ -445,7 +445,7 @@ impl TryFrom<(usize, usize)> for Spatula {
             // Chum Bucket Lab,
             (12, 0) => Ok(KahRahTae),
             (12, 1) => Ok(TheSmallShallRuleOrNot),
-            _ => Err(""),
+            _ => Err("Menu coordinate did not correspond to a Spatula"),
         }
     }
 }
