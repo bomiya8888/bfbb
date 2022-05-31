@@ -1,12 +1,10 @@
-use crate::{room::Room, spatula::Spatula};
+use super::{DataMember, GameInterface, InterfaceError, InterfaceResult};
+use crate::{Room, Spatula};
+
 use log::{debug, error, trace};
 use process_memory::{Memory, ProcessHandle, TryIntoProcessHandle};
 use sysinfo::{ProcessExt, System, SystemExt};
 use thiserror::Error;
-
-use crate::game_interface::{GameInterface, InterfaceError, InterfaceResult};
-
-use super::DataMember;
 
 const REGION_SIZE: usize = 0x2000000;
 
