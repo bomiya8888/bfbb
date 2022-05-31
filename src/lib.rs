@@ -6,10 +6,14 @@
 //! `serde`: Implements `serde`'s `Serialize`/`Deserialize` for the core data types.
 //!
 //! `game-interface`: Enables the [`game_interface`] module.
+//!
 // TODO: #![deny(missing_docs)]
 #![warn(rust_2018_idioms)]
 
 #[cfg(feature = "game-interface")]
 pub mod game_interface;
-pub mod room;
-pub mod spatula;
+
+mod room;
+pub use room::Room;
+mod spatula;
+pub use spatula::Spatula;
