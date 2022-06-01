@@ -1,7 +1,15 @@
+//! Allows for performing actions on or reading information about a running instance of BfBB.
+
+pub mod dolphin;
+
 use crate::{Room, Spatula};
 use thiserror::Error;
 
+/// Error type for failed [GameInterface] actions.
+///
+/// This list is non-exhaustive and may grow over time.
 #[derive(Copy, Clone, Debug, Error)]
+#[non_exhaustive]
 pub enum InterfaceError {
     #[error("Interface became unhooked")]
     Unhooked,
@@ -19,9 +27,14 @@ impl From<std::io::Error> for InterfaceError {
     }
 }
 
+/// Result type for [GameInterface] actions.
 pub type InterfaceResult<T> = std::result::Result<T, InterfaceError>;
 
-/// Trait for interacting with BfBB in an abstract way.
+/// Interact with BfBB in an abstract way.
+///
+/// This trait defines functionality related to performing actions on a running instance of *Battle for Bikini Bottom*
+/// Actions which read or modify scene memory require a `current_room` parameter to make sure that the target memory
+/// is available.
 pub trait GameInterface {
     /// True if the game is currently in a loading screen.
     fn is_loading(&self) -> InterfaceResult<bool>;
@@ -50,13 +63,13 @@ pub trait GameInterface {
     /// Collect a spatula in the world. This only removes the entity, it will not complete the task or increment the spatula
     /// counter.
     /// # Returns:
-    /// `Ok(())` for [Kah-Rah-Tae](clash::spatula::Spatula::KahRahTae) and [The Small Shall Rule... Or Not](Spatula::TheSmallShallRuleOrNot)
+    /// `Ok(())` for [Kah-Rah-Tae](Spatula::KahRahTae) and [The Small Shall Rule... Or Not](Spatula::TheSmallShallRuleOrNot)
     /// without writing memory.
     fn collect_spatula(&self, spatula: Spatula, current_room: Option<Room>) -> InterfaceResult<()>;
 
     /// True when `spatula`'s collected animation is playing
     /// # Returns:
-    /// `Ok(false)` for [Kah-Rah-Tae](clash::spatula::Spatula::KahRahTae) and [The Small Shall Rule... Or Not](Spatula::TheSmallShallRuleOrNot)
+    /// `Ok(false)` for [Kah-Rah-Tae](Spatula::KahRahTae) and [The Small Shall Rule... Or Not](Spatula::TheSmallShallRuleOrNot)
     fn is_spatula_being_collected(
         &self,
         spatula: Spatula,

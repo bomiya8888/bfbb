@@ -1,3 +1,5 @@
+//! Dolphin backend for [GameInterface]
+
 use super::{DataMember, GameInterface, InterfaceError, InterfaceResult};
 use crate::{Room, Spatula};
 
