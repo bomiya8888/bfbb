@@ -1,6 +1,7 @@
 //! Dolphin backend for [GameInterface]
 
-use super::{DataMember, GameInterface, InterfaceError, InterfaceResult};
+use super::DataMember;
+use crate::game_interface::{GameInterface, InterfaceError, InterfaceResult};
 use crate::{Room, Spatula};
 
 use log::{debug, error, trace};
@@ -10,9 +11,9 @@ use thiserror::Error;
 
 const REGION_SIZE: usize = 0x2000000;
 
-#[cfg(unix)]
+#[cfg(target_os = "linux")]
 const PROCESS_NAME: &str = "dolphin-emu";
-#[cfg(windows)]
+#[cfg(target_os = "windows")]
 const PROCESS_NAME: &str = "Dolphin";
 
 #[derive(Debug, Error)]
