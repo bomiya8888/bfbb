@@ -298,7 +298,7 @@ fn get_emulated_base_address(pid: sysinfo::Pid) -> Option<usize> {
     let map = maps.iter().rev().find(|m| {
         m.size() == REGION_SIZE
             && m.filename()
-                .and_then(|f| Some(f.to_string_lossy().contains("dolphin-emu")))
+                .map(|f| f.to_string_lossy().contains("dolphin-emu"))
                 .unwrap_or(false)
     });
     map.map(|m| m.start())
