@@ -8,6 +8,13 @@ use process_memory::{Memory, ProcessHandle, TryIntoProcessHandle};
 use sysinfo::{ProcessExt, System, SystemExt};
 use thiserror::Error;
 
+const REGION_SIZE: usize = 0x2000000;
+
+#[cfg(unix)]
+const PROCESS_NAME: &str = "dolphin-emu";
+#[cfg(windows)]
+const PROCESS_NAME: &str = "Dolphin";
+
 #[derive(Debug, Error)]
 pub enum Error {
     #[error("The emulated memory region could not be found. Make sure Dolphin is running and the game is open.")]
@@ -263,10 +270,7 @@ impl GameInterface for DolphinInterface {
     }
 }
 
-const REGION_SIZE: usize = 0x2000000;
-
 #[cfg(target_os = "linux")]
-const PROCESS_NAME: &str = "dolphin-emu";
 fn get_emulated_base_address(pid: sysinfo::Pid) -> Option<usize> {
     use proc_maps::get_process_maps;
     let maps = match get_process_maps(pid.into()) {
@@ -289,7 +293,6 @@ fn get_emulated_base_address(pid: sysinfo::Pid) -> Option<usize> {
 }
 
 #[cfg(target_os = "windows")]
-const PROCESS_NAME: &str = "Dolphin";
 fn get_emulated_base_address(pid: sysinfo::Pid) -> Option<usize> {
     use winapi::um::handleapi::CloseHandle;
     use winapi::um::memoryapi::VirtualQueryEx;
