@@ -1,5 +1,3 @@
-//! Dolphin backend for [GameInterface]
-
 use super::DataMember;
 use crate::game_interface::{GameInterface, InterfaceError, InterfaceResult};
 use crate::{Room, Spatula};
@@ -16,6 +14,7 @@ const PROCESS_NAME: &str = "dolphin-emu";
 #[cfg(target_os = "windows")]
 const PROCESS_NAME: &str = "Dolphin";
 
+/// Error type for failures to interact with Dolphin's memory.
 #[derive(Debug, Error)]
 pub enum Error {
     #[error("The emulated memory region could not be found. Make sure Dolphin is running and the game is open.")]
@@ -30,6 +29,18 @@ impl From<std::io::Error> for Error {
     }
 }
 
+/// A [GameInterface](crate::game_interface::GameInterface) implemented for Dolphin running on the same local machine.
+///
+/// # Example Usage
+/// ```
+/// use bfbb::game_interface::{ GameInterface, dolphin::DolphinInterface };
+/// use bfbb::Spatula;
+///
+/// let mut game = DolphinInterface::default();
+/// if game.hook().is_ok() {
+///     game.mark_task_complete(Spatula::SpongebobsCloset);
+/// }
+/// ```
 #[derive(Default)]
 pub struct DolphinInterface {
     system: System,
