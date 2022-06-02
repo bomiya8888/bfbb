@@ -17,8 +17,10 @@ const PROCESS_NAME: &str = "Dolphin";
 /// Error type for failures to interact with Dolphin's memory.
 #[derive(Debug, Error)]
 pub enum Error {
+    /// The BfBB memory-region could not be found.
     #[error("The emulated memory region could not be found. Make sure Dolphin is running and the game is open.")]
     RegionNotFound,
+    /// An error occurred while reading/writing to Dolphin's memory
     #[error("Dolphin memory could not be accessed.")]
     IO,
 }
@@ -49,6 +51,11 @@ pub struct DolphinInterface {
 }
 
 impl DolphinInterface {
+    /// Attempt to hook Dolphin
+    ///
+    /// Dolphin is considered "hooked" when it's process is found and the region of memory used
+    /// for emulating the GameCube's memory is located. This method will always attempt to hook
+    /// Dolphin when called, even if already hooked.
     pub fn hook(&mut self) -> Result<(), Error> {
         // TODO: Differentiate errors between Dolphin not being found and Dolphin being found, but the game not being open.
         // We might be rehooking, so we should "unhook" to prevent ending up in an invalid state if rehooking fails

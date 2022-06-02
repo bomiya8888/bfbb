@@ -7,7 +7,7 @@
 //!
 //! `game-interface`: Enables the [`game_interface`] module.
 //!
-// TODO: #![deny(missing_docs)]
+#![deny(missing_docs)]
 #![warn(rust_2018_idioms)]
 
 #[cfg(feature = "game-interface")]

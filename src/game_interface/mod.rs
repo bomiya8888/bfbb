@@ -11,8 +11,10 @@ use thiserror::Error;
 #[derive(Copy, Clone, Debug, Error)]
 #[non_exhaustive]
 pub enum InterfaceError {
+    /// Error for when the interface isn't hooked to the game.
     #[error("Interface became unhooked")]
     Unhooked,
+    /// Error for when an action fails for any other reason.
     #[error("Interface operation failed")]
     Other,
 }

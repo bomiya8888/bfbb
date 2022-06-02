@@ -33,71 +33,124 @@
 #[derive(Debug, PartialEq, Eq, Copy, Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub enum Room {
+    #[doc(hidden)]
     MainMenu,
+    #[doc(hidden)]
     IntroCutscene,
 
+    #[doc(hidden)]
     BikiniBottom,
+    #[doc(hidden)]
     SpongebobHouse,
+    #[doc(hidden)]
     SquidwardHouse,
+    #[doc(hidden)]
     PatrickHouse,
+    #[doc(hidden)]
     ShadyShoals,
+    #[doc(hidden)]
     PoliceStation,
+    #[doc(hidden)]
     Treedome,
+    #[doc(hidden)]
     KrustyKrab,
+    #[doc(hidden)]
     ChumBucket,
+    #[doc(hidden)]
     Theater,
 
+    #[doc(hidden)]
     Poseidome,
+    #[doc(hidden)]
     IndustrialPark,
 
+    #[doc(hidden)]
     JellyfishRock,
+    #[doc(hidden)]
     JellyfishCaves,
+    #[doc(hidden)]
     JellyfishLake,
+    #[doc(hidden)]
     JellyfishMountain,
 
+    #[doc(hidden)]
     DowntownStreets,
+    #[doc(hidden)]
     DowntownRooftops,
+    #[doc(hidden)]
     DowntownLighthouse,
+    #[doc(hidden)]
     DowntownSeaNeedle,
 
+    #[doc(hidden)]
     GooLagoonBeach,
+    #[doc(hidden)]
     GooLagoonCaves,
+    #[doc(hidden)]
     GooLagoonPier,
 
+    #[doc(hidden)]
     MermalairEntranceArea,
+    #[doc(hidden)]
     MermalairMainChamber,
+    #[doc(hidden)]
     MermalairSecurityTunnel,
+    #[doc(hidden)]
     MermalairBallroom,
+    #[doc(hidden)]
     MermalairVillianContainment,
 
+    #[doc(hidden)]
     RockBottomDowntown,
+    #[doc(hidden)]
     RockBottomMuseum,
+    #[doc(hidden)]
     RockBottomTrench,
 
+    #[doc(hidden)]
     SandMountainHub,
+    #[doc(hidden)]
     SandMountainSlide1,
+    #[doc(hidden)]
     SandMountainSlide2,
+    #[doc(hidden)]
     SandMountainSlide3,
 
+    #[doc(hidden)]
     KelpForest,
+    #[doc(hidden)]
     KelpSwamps,
+    #[doc(hidden)]
     KelpCaves,
+    #[doc(hidden)]
     KelpVines,
 
+    #[doc(hidden)]
     GraveyardLake,
+    #[doc(hidden)]
     GraveyardShipwreck,
+    #[doc(hidden)]
     GraveyardShip,
+    #[doc(hidden)]
     GraveyardBoss,
 
+    #[doc(hidden)]
     SpongebobsDream,
+    #[doc(hidden)]
     SandysDream,
+    #[doc(hidden)]
     SquidwardsDream,
+    #[doc(hidden)]
     KrabsDream,
+    #[doc(hidden)]
     PatricksDream,
 
+    #[doc(hidden)]
     ChumBucketLab,
+    #[doc(hidden)]
     ChumBucketBrain,
 
+    #[doc(hidden)]
     SpongeballArena,
 }
 

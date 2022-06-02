@@ -23,113 +23,197 @@ use strum_macros::{EnumCount, EnumIter};
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub enum Spatula {
     // Bikini Bottom
+    #[doc(hidden)]
     OnTopOfThePineapple,
+    #[doc(hidden)]
     OnTopOfShadyShoals,
+    #[doc(hidden)]
     OnTopOfTheChumBucket,
+    #[doc(hidden)]
     SpongebobsCloset,
+    #[doc(hidden)]
     AnnoySquidward,
+    #[doc(hidden)]
     AmbushAtTheTreeDome,
+    #[doc(hidden)]
     InfestationAtTheKrustyKrab,
+    #[doc(hidden)]
     AWallJumpInTheBucket,
 
     // Jellyfish Fields
+    #[doc(hidden)]
     TopOfTheHill,
+    #[doc(hidden)]
     CowaBungee,
+    #[doc(hidden)]
     Spelunking,
+    #[doc(hidden)]
     PatricksDilemma,
+    #[doc(hidden)]
     NavigateTheCanyonsAndMesas,
+    #[doc(hidden)]
     DrainTheLake,
+    #[doc(hidden)]
     SlideLeap,
+    #[doc(hidden)]
     DefeatKingJellyfish,
 
     // Downtown Bikini Bottom
+    #[doc(hidden)]
     EndOfTheRoad,
+    #[doc(hidden)]
     LearnSandysMoves,
+    #[doc(hidden)]
     TikisGoBoom,
+    #[doc(hidden)]
     AcrossTheRooftops,
+    #[doc(hidden)]
     SwinginSandy,
+    #[doc(hidden)]
     AmbushInTheLighthouse,
+    #[doc(hidden)]
     ExtremeBungee,
+    #[doc(hidden)]
     ComeBackWithTheCruiseBubble,
 
     // Goo Lagoon
+    #[doc(hidden)]
     KingOfTheCastle,
+    #[doc(hidden)]
     ConnectTheTowers,
+    #[doc(hidden)]
     SaveTheChildren,
+    #[doc(hidden)]
     OverTheMoat,
+    #[doc(hidden)]
     ThroughTheSeaCaves,
+    #[doc(hidden)]
     CleanOutTheBumperBoats,
+    #[doc(hidden)]
     SlipAndSlideUnderThePier,
+    #[doc(hidden)]
     TowerBungee,
 
     // Poseidome
+    #[doc(hidden)]
     RumbleAtThePoseidome,
 
     // Rock Bottom
+    #[doc(hidden)]
     GetToTheMuseum,
+    #[doc(hidden)]
     SlipSlidingAway,
+    #[doc(hidden)]
     ReturnTheMuseumsArt,
+    #[doc(hidden)]
     SwingalongSpatula,
+    #[doc(hidden)]
     PlunderingRobotsInTheMuseum,
+    #[doc(hidden)]
     AcrossTheTrenchOfDarkness,
+    #[doc(hidden)]
     LasersAreFunAndGoodForYou,
+    #[doc(hidden)]
     HowInTarnationDoYouGetThere,
 
     // Mermalair
+    #[doc(hidden)]
     TopOfTheEntranceAreaML,
+    #[doc(hidden)]
     TopOfTheComputerArea,
+    #[doc(hidden)]
     ShutDownTheSecuritySystem,
+    #[doc(hidden)]
     TheFunnelMachines,
+    #[doc(hidden)]
     TheSpinningTowersOfPower,
+    #[doc(hidden)]
     TopOfTheSecurityTunnel,
+    #[doc(hidden)]
     CompleteTheRollingBallRoom,
+    #[doc(hidden)]
     DefeatPrawn,
 
     // Sand Mountain
+    #[doc(hidden)]
     FrostyBungee,
+    #[doc(hidden)]
     TopOfTheLodge,
+    #[doc(hidden)]
     DefeatRobotsOnGuppyMound,
+    #[doc(hidden)]
     BeatMrsPuffsTime,
+    #[doc(hidden)]
     DefeatRobotsOnFlounderHill,
+    #[doc(hidden)]
     BeatBubbleBuddysTime,
+    #[doc(hidden)]
     DefeatRobotsOnSandMountain,
+    #[doc(hidden)]
     BeatLarrysTime,
 
     // Industrial Park
+    #[doc(hidden)]
     RoboPatrickAhoy,
 
     // Kelp Forest
+    #[doc(hidden)]
     ThroughTheWoods,
+    #[doc(hidden)]
     FindAllTheLostCampers,
+    #[doc(hidden)]
     TikiRoundup,
+    #[doc(hidden)]
     DownInTheSwamp,
+    #[doc(hidden)]
     ThroughTheKelpCaves,
+    #[doc(hidden)]
     PowerCrystalCrisis,
+    #[doc(hidden)]
     KelpVineSlide,
+    #[doc(hidden)]
     BeatMermaidMansTime,
 
     // Flying Dutchman's Graveyard
+    #[doc(hidden)]
     TopOfTheEntranceAreaFDG,
+    #[doc(hidden)]
     APathThroughTheGoo,
+    #[doc(hidden)]
     GooTankerAhoy,
+    #[doc(hidden)]
     TopOfTheStackOfShips,
+    #[doc(hidden)]
     ShipwreckBungee,
+    #[doc(hidden)]
     DestroyTheRobotShip,
+    #[doc(hidden)]
     GetAloftThereMatey,
+    #[doc(hidden)]
     DefeatTheFlyingDutchman,
 
     // SpongeBob's Dream
+    #[doc(hidden)]
     AcrossTheDreamscape,
+    #[doc(hidden)]
     FollowTheBouncingBall,
+    #[doc(hidden)]
     SlidingTexasStyle,
+    #[doc(hidden)]
     SwingersAhoy,
+    #[doc(hidden)]
     MusicIsInTheEarOfTheBeholder,
+    #[doc(hidden)]
     KrabbyPattyPlatforms,
+    #[doc(hidden)]
     SuperBounce,
+    #[doc(hidden)]
     HereYouGo,
 
     // Chum Bucket Lab
+    #[doc(hidden)]
     KahRahTae,
+    #[doc(hidden)]
     TheSmallShallRuleOrNot,
 }
 
