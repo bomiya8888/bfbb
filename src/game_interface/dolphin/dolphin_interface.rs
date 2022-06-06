@@ -1,6 +1,6 @@
 use super::DataMember;
 use crate::game_interface::{GameInterface, InterfaceError, InterfaceResult};
-use crate::{Room, Spatula};
+use crate::{Level, Spatula};
 
 use log::{debug, error, trace};
 use process_memory::{Memory, ProcessHandle, TryIntoProcessHandle};
@@ -133,7 +133,7 @@ impl GameInterface for DolphinInterface {
         Ok(())
     }
 
-    fn get_current_level(&self) -> InterfaceResult<Room> {
+    fn get_current_level(&self) -> InterfaceResult<Level> {
         let ptr = DataMember::<[u8; 4]>::new_offset(
             self.handle.ok_or(InterfaceError::Unhooked)?,
             self.base_address.ok_or(InterfaceError::Unhooked)?,
@@ -204,8 +204,12 @@ impl GameInterface for DolphinInterface {
         Ok(u16::from_be(ptr.read()?) == 2)
     }
 
-    fn collect_spatula(&self, spatula: Spatula, current_room: Option<Room>) -> InterfaceResult<()> {
-        if current_room != Some(spatula.get_room()) {
+    fn collect_spatula(
+        &self,
+        spatula: Spatula,
+        current_level: Option<Level>,
+    ) -> InterfaceResult<()> {
+        if current_level != Some(spatula.get_level()) {
             return Ok(());
         }
         let handle = self.handle.ok_or(InterfaceError::Unhooked)?;
@@ -249,9 +253,9 @@ impl GameInterface for DolphinInterface {
     fn is_spatula_being_collected(
         &self,
         spatula: Spatula,
-        current_room: Option<Room>,
+        current_level: Option<Level>,
     ) -> InterfaceResult<bool> {
-        if current_room != Some(spatula.get_room()) {
+        if current_level != Some(spatula.get_level()) {
             return Ok(false);
         }
         let handle = self.handle.ok_or(InterfaceError::Unhooked)?;
@@ -271,8 +275,8 @@ impl GameInterface for DolphinInterface {
         Ok(u32::from_be(ptr.read()?) & 4 != 0)
     }
 
-    fn set_lab_door(&self, value: u32, current_room: Option<Room>) -> InterfaceResult<()> {
-        if current_room != Some(Room::ChumBucket) {
+    fn set_lab_door(&self, value: u32, current_level: Option<Level>) -> InterfaceResult<()> {
+        if current_level != Some(Level::ChumBucket) {
             return Ok(());
         }
 

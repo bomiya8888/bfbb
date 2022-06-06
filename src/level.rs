@@ -3,36 +3,36 @@
 /// # Scene IDs
 /// Battle for Bikini Bottom uses bytestrings encoded into a u32 to identify scenes.
 /// Internally this was implemented with C/C++ multi-character constants (`u32 scene_id = 'HB01'`).
-/// `Room` implements conversion to and from this format using a byte array (`[u8; 4]`).
+/// `Level` implements conversion to and from this format using a byte array (`[u8; 4]`).
 ///
 /// # Examples
 /// Using scene ids:
 /// ```
-/// use bfbb::Room;
+/// use bfbb::Level;
 ///
-/// // Attempting to get a Room from a scene_id
+/// // Attempting to get a Level from a scene_id
 ///
 /// let scene_id = b"HB01";
-/// let room = Room::try_from(*scene_id).expect("'HB01' should be the main hub level");
-/// assert_eq!(room, Room::BikiniBottom);
+/// let level = Level::try_from(*scene_id).expect("'HB01' should be the main hub level");
+/// assert_eq!(level, Level::BikiniBottom);
 ///
-/// // Converting a Room to it's scene_id
+/// // Converting a Level to it's scene_id
 ///
-/// let hub = Room::BikiniBottom;
+/// let hub = Level::BikiniBottom;
 /// let scene_id: [u8; 4] = hub.into();
 /// assert_eq!(b"HB01", &scene_id)
 /// ```
 ///
-/// Converting a Room to it's in-game name:
+/// Converting a Level to it's in-game name:
 /// ```
-/// use bfbb::Room;
+/// use bfbb::Level;
 ///
-/// let room = Room::SpongebobHouse;
-/// println!("{room}"); // Prints "Spongebob's House"
-/// assert_eq!(room.to_string().as_str(), "Spongebob's House");
+/// let level = Level::SpongebobHouse;
+/// println!("{level}"); // Prints "Spongebob's House"
+/// assert_eq!(level.to_string().as_str(), "Spongebob's House");
 #[derive(Debug, PartialEq, Eq, Copy, Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
-pub enum Room {
+pub enum Level {
     #[doc(hidden)]
     MainMenu,
     #[doc(hidden)]
@@ -154,9 +154,9 @@ pub enum Room {
     SpongeballArena,
 }
 
-impl std::fmt::Display for Room {
+impl std::fmt::Display for Level {
     fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
-        use Room::*;
+        use Level::*;
         match *self {
             MainMenu => write!(fmt, "Main Menu"),
             IntroCutscene => write!(fmt, "Intro Cutscene"),
@@ -215,11 +215,11 @@ impl std::fmt::Display for Room {
     }
 }
 
-impl TryFrom<[u8; 4]> for Room {
+impl TryFrom<[u8; 4]> for Level {
     type Error = &'static str;
 
     fn try_from(scene_id: [u8; 4]) -> Result<Self, Self::Error> {
-        use Room::*;
+        use Level::*;
         match &scene_id {
             b"MNU3" => Ok(MainMenu),
             b"HB00" => Ok(IntroCutscene),
@@ -279,11 +279,11 @@ impl TryFrom<[u8; 4]> for Room {
     }
 }
 
-impl From<Room> for [u8; 4] {
-    fn from(room: Room) -> [u8; 4] {
-        use Room::*;
-        *match room {
-            Room::MainMenu => b"MNU3",
+impl From<Level> for [u8; 4] {
+    fn from(level: Level) -> [u8; 4] {
+        use Level::*;
+        *match level {
+            Level::MainMenu => b"MNU3",
             IntroCutscene => b"HB00",
             BikiniBottom => b"HB01",
             SpongebobHouse => b"HB02",

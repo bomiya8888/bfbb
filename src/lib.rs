@@ -13,7 +13,7 @@
 #[cfg(feature = "game-interface")]
 pub mod game_interface;
 
-mod room;
-pub use room::Room;
+mod level;
+pub use level::Level;
 mod spatula;
 pub use spatula::Spatula;

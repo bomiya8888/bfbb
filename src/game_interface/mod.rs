@@ -2,7 +2,7 @@
 
 pub mod dolphin;
 
-use crate::{Room, Spatula};
+use crate::{Level, Spatula};
 use thiserror::Error;
 
 /// Error type for failed [GameInterface] actions.
@@ -35,7 +35,7 @@ pub type InterfaceResult<T> = std::result::Result<T, InterfaceError>;
 /// Interact with BfBB in an abstract way.
 ///
 /// This trait defines functionality related to performing actions on a running instance of *Battle for Bikini Bottom*
-/// Actions which read or modify scene memory require a `current_room` parameter to make sure that the target memory
+/// Actions which read or modify scene memory require a `current_level` parameter to make sure that the target memory
 /// is available.
 pub trait GameInterface {
     /// True if the game is currently in a loading screen.
@@ -48,7 +48,7 @@ pub trait GameInterface {
     fn unlock_powers(&self) -> InterfaceResult<()>;
 
     /// Get the level that the player is currently in
-    fn get_current_level(&self) -> InterfaceResult<Room>;
+    fn get_current_level(&self) -> InterfaceResult<Level>;
 
     /// Gets the player's total spatula count
     fn get_spatula_count(&self) -> InterfaceResult<u32>;
@@ -67,7 +67,11 @@ pub trait GameInterface {
     /// # Returns:
     /// `Ok(())` for [Kah-Rah-Tae](Spatula::KahRahTae) and [The Small Shall Rule... Or Not](Spatula::TheSmallShallRuleOrNot)
     /// without writing memory.
-    fn collect_spatula(&self, spatula: Spatula, current_room: Option<Room>) -> InterfaceResult<()>;
+    fn collect_spatula(
+        &self,
+        spatula: Spatula,
+        current_level: Option<Level>,
+    ) -> InterfaceResult<()>;
 
     /// True when `spatula`'s collected animation is playing
     /// # Returns:
@@ -75,9 +79,9 @@ pub trait GameInterface {
     fn is_spatula_being_collected(
         &self,
         spatula: Spatula,
-        current_room: Option<Room>,
+        current_level: Option<Level>,
     ) -> InterfaceResult<bool>;
 
     /// Changes the number of spatulas required to enter the Chum Bucket Lab.
-    fn set_lab_door(&self, value: u32, current_room: Option<Room>) -> InterfaceResult<()>;
+    fn set_lab_door(&self, value: u32, current_level: Option<Level>) -> InterfaceResult<()>;
 }

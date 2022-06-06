@@ -314,17 +314,17 @@ impl Spatula {
         }
     }
 
-    /// Returns the room this spatula is in.
+    /// Returns the level this spatula is in.
     ///
     /// ```
-    /// use bfbb::{Room,Spatula};
+    /// use bfbb::{Level, Spatula};
     ///
     /// let closet = Spatula::SpongebobsCloset;
-    /// let room = closet.get_room();
-    /// assert_eq!(room, Room::SpongebobHouse);
+    /// let level = closet.get_level();
+    /// assert_eq!(level, Level::SpongebobHouse);
     /// ```
-    pub fn get_room(&self) -> crate::Room {
-        use crate::Room::*;
+    pub fn get_level(&self) -> crate::Level {
+        use crate::Level::*;
         use Spatula::*;
         match *self {
             OnTopOfThePineapple => BikiniBottom,
