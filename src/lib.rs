@@ -17,3 +17,5 @@ mod level;
 pub use level::Level;
 mod spatula;
 pub use spatula::Spatula;
+
+pub use strum::{EnumCount, IntoEnumIterator};
