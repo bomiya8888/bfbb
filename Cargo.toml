@@ -2,6 +2,10 @@
 name = "bfbb"
 version = "0.1.0"
 edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Library for interacting with SpongeBob SquarePants: Battle for Bikini Bottom"
+repository = "https://github.com/BfBBModdingTools/bfbb"
+keywords = ["spongebob", "bfbb"]
 
 [features]
 game-interface = ["dep:process-memory", "dep:proc-maps", "dep:sysinfo", "dep:winapi"]
