@@ -7,6 +7,9 @@ description = "Library for interacting with SpongeBob SquarePants: Battle for Bi
 repository = "https://github.com/BfBBModdingTools/bfbb"
 keywords = ["spongebob", "bfbb"]
 
+[package.metadata.docs.rs]
+features = ["game_interface"]
+
 [features]
 game-interface = ["dep:process-memory", "dep:proc-maps", "dep:sysinfo", "dep:winapi"]
 
