@@ -1,7 +1,7 @@
 //! Dolphin backend for [`GameInterface`](super::GameInterface)
 use log::{debug, error, trace};
-use process_memory::TryIntoProcessHandle;
-use sysinfo::{ProcessExt, System, SystemExt};
+use process_memory::{CopyAddress, TryIntoProcessHandle};
+use sysinfo::{PidExt, ProcessExt, System, SystemExt};
 use tap::TapFallible;
 use thiserror::Error;
 
@@ -88,7 +88,6 @@ impl DolphinInterface {
     fn get_interface_or_hook(&mut self) -> InterfaceResult<&mut GameInterface<DolphinBackend>> {
         let interface = match self.state {
             DolphinState::Unhooked => {
-                // TODO: Add information about why.
                 let interface = self.hook()?;
                 self.state = DolphinState::Hooked(interface);
                 match self.state {
@@ -107,35 +106,43 @@ impl DolphinInterface {
     /// for emulating the GameCube's memory is located. This method will always attempt to hook
     /// Dolphin when called, even if already hooked.
     fn hook(&mut self) -> InterfaceResult<GameInterface<DolphinBackend>> {
-        // TODO: Differentiate errors between Dolphin not being found and Dolphin being found, but the game not being open.
         self.system.refresh_processes();
 
         let procs = self.system.processes_by_name(PROCESS_NAME);
-        if let Some((pid, addr)) = procs
+        let mut process_found = false;
+        let (pid, base_address) = procs
             .into_iter()
-            .map(|p| {
+            .find_map(|p| {
+                process_found = true;
                 let pid = p.pid();
                 trace!("{} found with pid {pid}", p.name());
-                (pid, get_emulated_base_address(pid))
+                let addr = get_emulated_base_address(pid)?;
+                Some((pid, addr))
             })
-            .find_map(|(pid, addr)| addr.map(|addr| (pid, addr)))
-        {
-            debug!("Found emulated memory region at {addr:#X}");
-            let base_address = addr;
+            .ok_or(if process_found {
+                InterfaceError::EmulationNotRunning
+            } else {
+                InterfaceError::ProcessNotFound
+            })?;
 
-            // Convert sysinfo Pid (wrapper type) to process_memory Pid (platform specific alias)
-            #[cfg(target_os = "windows")]
-            // Work around for sysinfo crate using usize on Windows for Pids
-            let pid = <sysinfo::Pid as Into<usize>>::into(pid) as u32;
+        debug!("Found emulated memory region at {base_address:#X}");
 
-            // This isn't uselss on *nix
-            #[allow(clippy::useless_conversion)]
-            let pid: process_memory::Pid = pid.into();
-            let handle = pid.try_into_process_handle()?;
-            return Ok(GameInterface::<DolphinBackend>::new(base_address, handle));
+        // Convert sysinfo Pid (wrapper type) to process_memory Pid (platform specific alias)
+        // Portability Bullshit:
+        //  Use `as_u32` as a workaround for sysinfo crate using usize for PIDs on Windows instead of DWORD
+        //  On windows this will truncate a usize to a u32 (Windows' actual PID type)
+        //  On *nix this will cast an i32 to a u32 and back again (no change)
+        let handle = (pid.as_u32() as process_memory::Pid).try_into_process_handle()?;
+
+        // Make sure that the currently running game is BfBB
+        const GAME_CODE: &[u8; 6] = b"GQPE78";
+        let mut buf = [0u8; 6];
+        handle.copy_address(base_address, &mut buf)?;
+        if &buf != GAME_CODE {
+            return Err(InterfaceError::IncorrectGame);
         }
 
-        Err(InterfaceError::HookingFailed)
+        Ok(GameInterface::<DolphinBackend>::new(base_address, handle))
     }
 }
 
@@ -155,7 +162,7 @@ fn get_emulated_base_address(pid: sysinfo::Pid) -> Option<usize> {
     let map = maps.iter().rev().find(|m| {
         m.size() == REGION_SIZE
             && m.filename()
-                .map(|f| f.to_string_lossy().contains("dolphin-emu"))
+                .map(|f| f.to_string_lossy().contains(PROCESS_NAME))
                 .unwrap_or(false)
     });
     map.map(|m| m.start())
